@@ -27,6 +27,6 @@ public class WorkoutTemplate {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "template", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "template", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<WorkoutTemplateExercise> exercises;
 }

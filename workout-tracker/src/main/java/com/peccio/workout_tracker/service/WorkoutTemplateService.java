@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -61,7 +62,8 @@ public class WorkoutTemplateService {
             });
         });
 
-        return toDTO(templateRepository.findById(savedTemplate.getId()).get());
+        return toDTO(templateRepository.findById(savedTemplate.getId())
+                .orElseThrow(() -> new RuntimeException("Template not found")));
     }
 
     // 2. Get all templates for current user
@@ -117,7 +119,9 @@ public class WorkoutTemplateService {
     }
 
     private WorkoutTemplateDTO toDTO(WorkoutTemplate template) {
-        List<WorkoutTemplateExerciseDTO> exercises = template.getExercises().stream()
+        List<WorkoutTemplateExerciseDTO> exercises = template.getExercises() == null ?
+                new ArrayList<>() :
+                template.getExercises().stream()
                 .map(te -> new WorkoutTemplateExerciseDTO(
                         te.getId(),
                         te.getExercise().getId(),

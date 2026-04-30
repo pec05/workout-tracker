@@ -28,6 +28,6 @@ public class WorkoutTemplateExercise {
 
     private Integer orderIndex;
 
-    @OneToMany(mappedBy = "templateExercise", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "templateExercise", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<WorkoutTemplateSet> sets = new ArrayList<>();
 }
